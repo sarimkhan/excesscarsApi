@@ -41,5 +41,5 @@ async def read_item(minYear: str = "", maxYear: str = ""):
     return getFIlteredVehicles(minYear, maxYear)
 
 @app.get("/getAllVehicles/")
-async def read_item():
+async def read_item2():
     return getAllVehicles()
