@@ -1,6 +1,14 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 import json
 
 connectionString = 'postgresql://neondb_owner:npg_O2IgKtHQMnB0@ep-rough-paper-afrptwb3-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
