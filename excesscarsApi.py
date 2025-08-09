@@ -1,18 +1,6 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 app = FastAPI()
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 import json
 
 connectionString = 'postgresql://neondb_owner:npg_O2IgKtHQMnB0@ep-rough-paper-afrptwb3-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
@@ -26,7 +14,10 @@ def getAllVehicles():
     cur.execute("SELECT * FROM vehicles;")
     tableVals = cur.fetchall()
     return tableVals;
-
+def getAllVehicleWithVIN(vin=""):
+    cur.execute("SELECT * FROM vehicles WHERE vin = '" + str(vin) + "';")
+    tableVals = cur.fetchall()
+    return tableVals;
 def getFIlteredVehicles(minYear = "", maxYear = ""):
     minyearString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) >= CAST(" + minYear + " AS INT);"
     maxyearString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) <= CAST(" + maxYear + " AS INT);"
@@ -39,7 +30,6 @@ def getFIlteredVehicles(minYear = "", maxYear = ""):
         cur.execute(minmaxString)    
     tableVals = cur.fetchall()
     return tableVals;
-print(len(getFIlteredVehicles("2018","2022")))
 #commit changes
 #conn.commit()
 
@@ -51,6 +41,10 @@ fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"
 @app.get("/getFilteredVehicles/")
 async def read_item(minYear: str = "", maxYear: str = ""):
     return getFIlteredVehicles(minYear, maxYear)
+
+@app.get("/getVehcileVin/")
+async def read_item(vin: str = ""):
+    return getAllVehicleWithVIN(vin)
 
 @app.get("/getAllVehicles/")
 async def read_item2():
