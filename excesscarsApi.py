@@ -22,7 +22,7 @@ conn = psycopg2.connect(connectionString)
 #initiaite Connection Object
 cur = conn.cursor()
 
-#Code goes here
+#Get Code goes here
 def getAllVehicles():
     cur.execute("SELECT * FROM vehicles;")
     tableVals = cur.fetchall()
@@ -43,8 +43,12 @@ def getFIlteredVehicles(minYear = "", maxYear = ""):
         cur.execute(minmaxString)    
     tableVals = cur.fetchall()
     return tableVals;
-#commit changes
-#conn.commit()
+
+#commit table changes
+
+def addOffer(name = "", email = "", number = "", zipcode = "", offer = ""):
+    cur.execute("INSERT INTO offers (name, number, email, offer, zipcode) VALUES (%s,%s,%s,%s,%s)", (name, number, email, offer, zipcode))
+    conn.commit()
 
 
 
@@ -62,3 +66,7 @@ async def read_item(vin: str = ""):
 @app.get("/getAllVehicles/")
 async def read_item2():
     return getAllVehicles()
+
+@app.get("/insertOffer/")
+async def read_item(name: str = "", email: str = "", number: str = "", zipcode: str = "", offer: str = ""):
+    return addOffer(name, email, number, zipcode, offer)
