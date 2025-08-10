@@ -48,7 +48,7 @@ def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPr
     return tableVals;
 
 #Filters
-def getMakes()
+def getMakes():
     cur.execute("SELECT DISTINCT make FROM vehicles")
     tableVals = cur.fetchall()
     return tableVals;
