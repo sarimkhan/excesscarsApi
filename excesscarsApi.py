@@ -46,8 +46,8 @@ def getFIlteredVehicles(minYear = "", maxYear = ""):
 
 #commit table changes
 
-def addOffer(name = "", email = "", number = "", zipcode = "", offer = ""):
-    cur.execute("INSERT INTO offers (name, number, email, offer, zipcode) VALUES (%s,%s,%s,%s,%s)", (name, number, email, offer, zipcode))
+def addOffer(name = "", email = "", number = "", zipcode = "", offer = "", vin = ""):
+    cur.execute("INSERT INTO offers (name, number, email, offer, zipcode, vin) VALUES (%s,%s,%s,%s,%s,%s)", (name, number, email, offer, zipcode, vin))
     conn.commit()
 
 
@@ -68,5 +68,5 @@ async def read_item2():
     return getAllVehicles()
 
 @app.get("/insertOffer/")
-async def read_item(name: str = "", email: str = "", number: str = "", zipcode: str = "", offer: str = ""):
-    return addOffer(name, email, number, zipcode, offer)
+async def read_item(name: str = "", email: str = "", number: str = "", zipcode: str = "", offer: str = "", vin: str = ""):
+    return addOffer(name, email, number, zipcode, offer, vin)
