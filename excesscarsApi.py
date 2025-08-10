@@ -49,7 +49,6 @@ def getFIlteredVehicles(minYear = "", maxYear = ""):
 def addOffer(name = "", email = "", number = "", zipcode = "", offer = ""):
     cur.execute("INSERT INTO offers (name, number, email, offer, zipcode) VALUES (%s,%s,%s,%s,%s)", (name, number, email, offer, zipcode))
     conn.commit()
-    return({message:"Success"})
 
 
 
