@@ -47,6 +47,12 @@ def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPr
     tableVals = cur.fetchall()
     return tableVals;
 
+#Filters
+def getMakes()
+    cur.execute("SELECT DISTINCT make FROM vehicles")
+    tableVals = cur.fetchall()
+    return tableVals;
+
 #commit table changes
 
 def addOffer(name = "", email = "", number = "", zipcode = "", offer = "", vin = ""):
@@ -73,3 +79,7 @@ async def read_item2():
 @app.get("/insertOffer/")
 async def read_item(name: str = "", email: str = "", number: str = "", zipcode: str = "", offer: str = "", vin: str = ""):
     return addOffer(name, email, number, zipcode, offer, vin)
+
+@app.get("/getMakes/")
+async def read_item():
+    return getMakes()
