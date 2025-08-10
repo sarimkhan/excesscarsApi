@@ -31,16 +31,19 @@ def getAllVehicleWithVIN(vin=""):
     cur.execute("SELECT * FROM vehicles WHERE vin = '" + str(vin) + "';")
     tableVals = cur.fetchall()
     return tableVals;
-def getFIlteredVehicles(minYear = "", maxYear = ""):
+def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPrice = "", maxPrice = "", miles = "", body = ""):
     minyearString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) >= CAST(" + minYear + " AS INT);"
     maxyearString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) <= CAST(" + maxYear + " AS INT);"
     minmaxString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) <= CAST(" + maxYear + " AS INT) AND CAST(caryear AS INT) >= CAST(" + minYear + " AS INT);"
+    makeString = "SELECT * FROM vehicles WHERE make LIKE '%" + make + "%';"
     if(minYear != "" and maxYear == ""):
         cur.execute(minyearString)
     if(minYear == "" and maxYear != ""):
         cur.execute(maxyearString) 
     if(minYear != "" and maxYear != ""):
         cur.execute(minmaxString)    
+    if(make != ""):
+        cur.execute(makeString)
     tableVals = cur.fetchall()
     return tableVals;
 
@@ -56,8 +59,8 @@ fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"
 
 
 @app.get("/getFilteredVehicles/")
-async def read_item(minYear: str = "", maxYear: str = ""):
-    return getFIlteredVehicles(minYear, maxYear)
+async def read_item(minYear: str = "", maxYear: str = "", make: str = ""):
+    return getFIlteredVehicles(minYear, maxYear, make)
 
 @app.get("/getVehcileVin/")
 async def read_item(vin: str = ""):
