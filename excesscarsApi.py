@@ -52,6 +52,11 @@ def getMakes():
     cur.execute("SELECT DISTINCT make FROM vehicles")
     tableVals = cur.fetchall()
     return tableVals;
+
+def getModels(make = ""):
+    cur.execute("SELECT DISTINCT make FROM vehicles WHERE make = " + make)
+    tableVals = cur.fetchall()
+    return tableVals;
     
 def getMinMaxYear():
     cur.execute("SELECT Min(carYear), MAX(carYear) FROM vehicles")
@@ -92,3 +97,7 @@ async def read_item():
 @app.get("/getMinMaxYear/")
 async def read_item():
     return getMinMaxYear()
+
+@app.get("/getModels/")
+async def read_item(make: str = ""):
+    return getMakes(make)
