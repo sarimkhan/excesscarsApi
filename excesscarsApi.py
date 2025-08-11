@@ -52,7 +52,12 @@ def getMakes():
     cur.execute("SELECT DISTINCT make FROM vehicles")
     tableVals = cur.fetchall()
     return tableVals;
-
+    
+def getMinMaxYear():
+    cur.execute("SELECT Min(carYear), MAX(carYear) FROM vehicles")
+    tableVals = cur.fetchall()
+    return tableVals;
+    
 #commit table changes
 
 def addOffer(name = "", email = "", number = "", zipcode = "", offer = "", vin = ""):
@@ -83,3 +88,7 @@ async def read_item(name: str = "", email: str = "", number: str = "", zipcode: 
 @app.get("/getMakes/")
 async def read_item():
     return getMakes()
+    
+@app.get("/getMinMaxYear/")
+async def read_item():
+    return getMinMaxYear()
