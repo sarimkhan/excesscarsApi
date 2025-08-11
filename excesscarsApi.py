@@ -54,7 +54,7 @@ def getMakes():
     return tableVals;
 
 def getModels(make = ""):
-    cur.execute("SELECT DISTINCT model FROM vehicles WHERE make = " + make)
+    cur.execute("SELECT DISTINCT model FROM vehicles WHERE make LIKE '%" + make + "%';")
     tableVals = cur.fetchall()
     return tableVals;
     
