@@ -100,4 +100,4 @@ async def read_item():
 
 @app.get("/getModels/")
 async def read_item(make: str = ""):
-    return getMakes(make)
+    return getModels(make)
