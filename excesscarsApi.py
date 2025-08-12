@@ -104,8 +104,8 @@ fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"
 
 
 @app.get("/getFilteredVehicles/")
-async def read_item(minYear: str = "", maxYear: str = "", make: str = ""):
-    return getFIlteredVehicles(minYear, maxYear, make)
+async def read_item(minYear: str = "", maxYear: str = "", make: str = "", model: str = "", minPrice: str = "", maxPrice: str = "", miles: str = "", body : str = ""):
+    return getFIlteredVehicles(minYear, maxYear, make, model, minPrice, maxPrice, miles, body)
 
 @app.get("/getVehcileVin/")
 async def read_item(vin: str = ""):
