@@ -32,6 +32,22 @@ def getAllVehicleWithVIN(vin=""):
     tableVals = cur.fetchall()
     return tableVals;
 def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = None, minPrice = None, maxPrice = None, miles = None, body = None):
+    if(minYear == ""):
+        minYear = None
+    if(maxYear == ""):
+        maxYear = None
+    if(make == ""):
+        make = None
+    if(model == ""):
+        model = None
+    if(minPrice == ""):
+        minPrice = None
+    if(maxPrice == ""):
+        maxPrice = None
+    if(miles == ""):
+        miles = None
+    if(body == ""):
+        body = None
     query="SELECT * FROM vehicles WHERE 1=1"
     params = []
     if make is not None:
@@ -88,7 +104,7 @@ fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"
 
 
 @app.get("/getFilteredVehicles/")
-async def read_item(minYear: str = None, maxYear: str = None, make: str = None):
+async def read_item(minYear: str = "", maxYear: str = "", make: str = ""):
     return getFIlteredVehicles(minYear, maxYear, make)
 
 @app.get("/getVehcileVin/")
