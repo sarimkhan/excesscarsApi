@@ -32,8 +32,11 @@ def getAllVehicleWithVIN(vin=""):
     tableVals = cur.fetchall()
     return tableVals;
 def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPrice = "", maxPrice = "", miles = "", body = ""):
-    allVehicles = getAllVehicles().data
-    return allVehicles
+    allVehicles = getAllVehicles()
+    tempdata = []
+    for(i in range allVehicles):
+        tempdata.append(allVehicles[i][0])
+    return tempdata
 #Filters
 def getMakes():
     cur.execute("SELECT DISTINCT make FROM vehicles")
