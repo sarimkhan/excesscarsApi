@@ -45,10 +45,7 @@ def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPr
             if(int(item[4]) <= int(maxYear)):
                 maxData.append(item)
     if(len(minData)>0 and len(maxData) > 0):
-        for item in minData:
-            if(maxData.has(item)):
-                if(tempdata.includes(item) == false):
-                    tempdata.append(item)
+        tempdata = list(minData.intersection(maxData))
     
     return tempdata
 #Filters
