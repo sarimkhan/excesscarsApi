@@ -31,25 +31,35 @@ def getAllVehicleWithVIN(vin=""):
     cur.execute("SELECT * FROM vehicles WHERE vin = '" + str(vin) + "';")
     tableVals = cur.fetchall()
     return tableVals;
-def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPrice = "", maxPrice = "", miles = "", body = ""):
-    allVehicles = getAllVehicles()
-    tempdata = []
-    minData = []
-    maxData = []
-    if(minYear != ""):
-        for item in allVehicles:
-            if(int(item[4]) >= int(minYear)):
-                minData.append(item)
-    if(maxYear != ""):
-        for item in allVehicles:
-            if(int(item[4]) <= int(maxYear)):
-                maxData.append(item)
-    if(len(minData)>0 and len(maxData) > 0):
-        setMin = set(minData)
-        setMax = set(maxData)
-        tempdata = list(setMin.intersection(setMax))
-    
-    return tempdata
+def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = None, minPrice = None, maxPrice = None, miles = None, body = None):
+    query="SELECT * FROM vehicles WHERE 1=1"
+    params = []
+    if make is not None:
+        query+=" AND make = %s"
+        params.append(make)
+    if minYear is not None:
+        query+=" AND CAST(caryear AS INT) >= %s"
+        params.append(int(minYear))
+    if maxYear is not None:
+        query+=" AND CAST(caryear AS INT) <= %s"
+        params.append(int(maxYear))
+    if model is not None:
+        query+=" AND model = %s"
+        params.append(model)
+    if minPrice is not None:
+        query+=" AND CAST(price AS INT) >= %s"
+        params.append(int(minPrice))
+    if maxPrice is not None:
+        query+=" AND CAST(price AS INT) <= %s"
+        params.append(int(maxPrice))
+    if miles is not None:
+        query+=" AND CAST(mileage AS INT) <= %s"
+        params.append(int(miles))
+    if body is not None:
+        query+=" AND bodytype = %s"
+        params.append(body)
+    cur.execute(query, params)
+    return cur.fetchall()
 #Filters
 def getMakes():
     cur.execute("SELECT DISTINCT make FROM vehicles")
@@ -78,7 +88,7 @@ fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"
 
 
 @app.get("/getFilteredVehicles/")
-async def read_item(minYear: str = "", maxYear: str = "", make: str = ""):
+async def read_item(minYear: str = None, maxYear: str = None, make: str = None):
     return getFIlteredVehicles(minYear, maxYear, make)
 
 @app.get("/getVehcileVin/")
