@@ -34,17 +34,21 @@ def getAllVehicleWithVIN(vin=""):
 def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPrice = "", maxPrice = "", miles = "", body = ""):
     allVehicles = getAllVehicles()
     tempdata = []
+    minData = []
+    maxData = []
     if(minYear != ""):
         for item in allVehicles:
             if(int(item[4]) >= int(minYear)):
-                tempdata.append(item)
-        allVehicles = tempdata
-        tempdata = []
+                minData.append(item)
     if(maxYear != ""):
         for item in allVehicles:
             if(int(item[4]) <= int(maxYear)):
-                tempdata.append(item)
-        
+                maxData.append(item)
+    if(len(minData)>0):
+        for item in minData:
+            if(maxData.has(item)):
+                if(!tempdata.includes(item)):
+                    tempdata.append(item)
     
     return tempdata
 #Filters
