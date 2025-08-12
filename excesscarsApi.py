@@ -35,7 +35,7 @@ def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPr
     allVehicles = getAllVehicles()
     tempdata = []
     for item in allVehicles:
-        tempdata.append(item[0])
+        tempdata.append(item[3])
     return tempdata
 #Filters
 def getMakes():
