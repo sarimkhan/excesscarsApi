@@ -32,21 +32,8 @@ def getAllVehicleWithVIN(vin=""):
     tableVals = cur.fetchall()
     return tableVals;
 def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPrice = "", maxPrice = "", miles = "", body = ""):
-    minyearString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) >= CAST(" + minYear + " AS INT);"
-    maxyearString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) <= CAST(" + maxYear + " AS INT);"
-    minmaxString = "SELECT * FROM vehicles" + " WHERE CAST(caryear AS INT) <= CAST(" + maxYear + " AS INT) AND CAST(caryear AS INT) >= CAST(" + minYear + " AS INT);"
-    makeString = "SELECT * FROM vehicles WHERE make LIKE '%" + make + "%';"
-    if(minYear != "" and maxYear == ""):
-        cur.execute(minyearString)
-    if(minYear == "" and maxYear != ""):
-        cur.execute(maxyearString) 
-    if(minYear != "" and maxYear != ""):
-        cur.execute(minmaxString)    
-    if(make != ""):
-        cur.execute(makeString)
-    tableVals = cur.fetchall()
-    return tableVals;
-
+    allVehicles = getAllVehicles().data
+    return allVehicles
 #Filters
 def getMakes():
     cur.execute("SELECT DISTINCT make FROM vehicles")
