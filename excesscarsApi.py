@@ -36,11 +36,11 @@ def getFIlteredVehicles(minYear = "", maxYear = "", make = "", model = "", minPr
     tempdata = []
     if(minYear != ""):
         for item in allVehicles:
-            if(int(item[4]) >= minYear):
+            if(int(item[4]) >= int(minYear)):
                 tempdata.append(item)
     if(maxYear != ""):
         for item in allVehicles:
-            if(int(item[4]) <= maxYear):
+            if(int(item[4]) <= int(maxYear)):
                 tempdata.append(item)
     
     return tempdata
