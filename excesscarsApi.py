@@ -97,8 +97,9 @@ def getMinMaxYear():
 def addOffer(name = "", email = "", number = "", zipcode = "", offer = "", vin = ""):
     cur.execute("INSERT INTO offers (name, number, email, offer, zipcode, vin) VALUES (%s,%s,%s,%s,%s,%s)", (name, number, email, offer, zipcode, vin))
     conn.commit()
-
-
+def contactMe(name = "", email = "", number = "", subject = "", message = ""):
+    cur.execute("INSERT INTO contactform (contactname, contactnumber, contactemail, contactsubject, contactmessage) VALUES (%s,%s,%s,%s,%s)", (name, number, email, subject, message))
+    conn.commit()
 
 fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
 
