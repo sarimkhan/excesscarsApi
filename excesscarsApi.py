@@ -120,6 +120,10 @@ async def read_item2():
 async def read_item(name: str = "", email: str = "", number: str = "", zipcode: str = "", offer: str = "", vin: str = ""):
     return addOffer(name, email, number, zipcode, offer, vin)
 
+@app.get("/insertContact/")
+async def read_item(name: str = "", email: str = "", number: str = "", subject: str = "", message: str = ""):
+    return addOffer(name, email, number, subject, message)
+
 @app.get("/getMakes/")
 async def read_item():
     return getMakes()
