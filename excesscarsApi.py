@@ -17,21 +17,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 connectionString = 'postgresql://neondb_owner:npg_O2IgKtHQMnB0@ep-rough-paper-afrptwb3-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
-conn = psycopg2.connect(connectionString)
+# conn = psycopg2.connect(connectionString)
 
-#initiaite Connection Object
-cur = conn.cursor()
+# #initiaite Connection Object
+# cur = conn.cursor()
 
 #Get Code goes here
 def getAllVehicles():
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("SELECT * FROM vehicles;")
     tableVals = cur.fetchall()
     return tableVals;
 def getAllVehicleWithVIN(vin=""):
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("SELECT * FROM vehicles WHERE vin = '" + str(vin) + "';")
     tableVals = cur.fetchall()
     return tableVals;
 def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = None, minPrice = None, maxPrice = None, miles = None, body = None):
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     if(minYear == ""):
         minYear = None
     if(maxYear == ""):
@@ -78,16 +84,22 @@ def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = Non
     return cur.fetchall()
 #Filters
 def getMakes():
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("SELECT DISTINCT make FROM vehicles")
     tableVals = cur.fetchall()
     return tableVals;
 
 def getModels(make = ""):
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("SELECT DISTINCT model FROM vehicles WHERE make LIKE '%" + make + "%';")
     tableVals = cur.fetchall()
     return tableVals;
     
 def getMinMaxYear():
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("SELECT Min(carYear), MAX(carYear) FROM vehicles")
     tableVals = cur.fetchall()
     return tableVals;
@@ -95,9 +107,13 @@ def getMinMaxYear():
 #commit table changes
 
 def addOffer(name = "", email = "", number = "", zipcode = "", offer = "", vin = ""):
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("INSERT INTO offers (name, number, email, offer, zipcode, vin) VALUES (%s,%s,%s,%s,%s,%s)", (name, number, email, offer, zipcode, vin))
     conn.commit()
 def contactMe(name = "", email = "", number = "", subject = "", message = ""):
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
     cur.execute("INSERT INTO contactform (contactname, contactnumber, contactemail, contactsubject, contactmessage) VALUES (%s,%s,%s,%s,%s)", (name, number, email, subject, message))
     conn.commit()
 
