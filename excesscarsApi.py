@@ -1,3 +1,4 @@
+import random
 from fastapi import FastAPI
 import psycopg2
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,6 +35,7 @@ def getAllVehicleWithVIN(vin=""):
     cur = conn.cursor()
     cur.execute("SELECT * FROM vehicles WHERE vin = '" + str(vin) + "';")
     tableVals = cur.fetchall()
+    random.shuffle(tableVals)
     return tableVals;
 def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = None, minPrice = None, maxPrice = None, miles = None, body = None):
     conn = psycopg2.connect(connectionString)
