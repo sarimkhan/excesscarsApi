@@ -90,6 +90,13 @@ def getMakes():
     tableVals = cur.fetchall()
     return tableVals;
 
+def getBodys():
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
+    cur.execute("SELECT DISTINCT bodytype FROM vehicles")
+    tableVals = cur.fetchall()
+    return tableVals;
+
 def getModels(make = ""):
     conn = psycopg2.connect(connectionString)
     cur = conn.cursor()
@@ -143,6 +150,10 @@ async def read_item(name: str = "", email: str = "", number: str = "", subject: 
 @app.get("/getMakes/")
 async def read_item():
     return getMakes()
+
+@app.get("/getBodys/")
+async def read_item():
+    return getBodys()
     
 @app.get("/getMinMaxYear/")
 async def read_item():
