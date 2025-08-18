@@ -102,6 +102,13 @@ def getBodys():
     tableVals = cur.fetchall()
     return tableVals;
 
+def getLocations():
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
+    cur.execute("SELECT DISTINCT location FROM vehicles")
+    tableVals = cur.fetchall()
+    return tableVals;
+
 def getModels(make = ""):
     conn = psycopg2.connect(connectionString)
     cur = conn.cursor()
@@ -159,6 +166,10 @@ async def read_item():
 @app.get("/getBodys/")
 async def read_item():
     return getBodys()
+
+@app.get("/getLocations/")
+async def read_item():
+    return getLocations()
     
 @app.get("/getMinMaxYear/")
 async def read_item():
