@@ -35,7 +35,7 @@ def getAllVehicleWithVIN(vin=""):
     cur.execute("SELECT * FROM vehicles WHERE vin = '" + str(vin) + "';")
     tableVals = cur.fetchall()
     return tableVals;
-def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = None, minPrice = None, maxPrice = None, miles = None, body = None):
+def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = None, minPrice = None, maxPrice = None, miles = None, body = None, location = None):
     conn = psycopg2.connect(connectionString)
     cur = conn.cursor()
     if(minYear == ""):
@@ -54,6 +54,8 @@ def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = Non
         miles = None
     if(body == ""):
         body = None
+    if(location == ""):
+        location = None
     query="SELECT * FROM vehicles WHERE 1=1"
     params = []
     if make is not None:
@@ -80,6 +82,9 @@ def getFIlteredVehicles(minYear = None, maxYear = None, make = None, model = Non
     if body is not None:
         query+=" AND bodytype = %s"
         params.append(body)
+    if location is not None:
+        query+=" AND location = %s"
+        params.append(location)
     cur.execute(query, params)
     return cur.fetchall()
 #Filters
@@ -128,8 +133,8 @@ fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"
 
 
 @app.get("/getFilteredVehicles/")
-async def read_item(minYear: str = "", maxYear: str = "", make: str = "", model: str = "", minPrice: str = "", maxPrice: str = "", miles: str = "", body : str = ""):
-    return getFIlteredVehicles(minYear, maxYear, make, model, minPrice, maxPrice, miles, body)
+async def read_item(minYear: str = "", maxYear: str = "", make: str = "", model: str = "", minPrice: str = "", maxPrice: str = "", miles: str = "", body : str = "", location : str = ""):
+    return getFIlteredVehicles(minYear, maxYear, make, model, minPrice, maxPrice, miles, body, location)
 
 @app.get("/getVehcileVin/")
 async def read_item(vin: str = ""):
