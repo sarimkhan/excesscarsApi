@@ -29,6 +29,12 @@ def getAllVehicles():
     cur.execute("SELECT * FROM vehicles;")
     tableVals = cur.fetchall()
     return tableVals;
+def getAllFeaturedVehicles():
+    conn = psycopg2.connect(connectionString)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM vehicles WHERE CAST(price as INT) < 15000;")
+    tableVals = cur.fetchall()
+    return tableVals;
 def getAllVehicleWithVIN(vin=""):
     conn = psycopg2.connect(connectionString)
     cur = conn.cursor()
@@ -150,6 +156,10 @@ async def read_item(vin: str = ""):
 @app.get("/getAllVehicles/")
 async def read_item2():
     return getAllVehicles()
+
+@app.get("/getFeaturedVehicles/")
+async def read_item2():
+    return getAllFeaturedVehicles()
 
 @app.get("/insertOffer/")
 async def read_item(name: str = "", email: str = "", number: str = "", zipcode: str = "", offer: str = "", vin: str = ""):
