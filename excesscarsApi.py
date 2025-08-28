@@ -32,7 +32,7 @@ def getAllVehicles():
 def getAllFeaturedVehicles():
     conn = psycopg2.connect(connectionString)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM vehicles WHERE CAST(price as INT) < 15000 ORDER BY RANDOM() LIMIT 8;")
+    cur.execute("SELECT * FROM vehicles WHERE CAST(price as INT) < 15000 ORDER BY RANDOM() LIMIT 4;")
     tableVals = cur.fetchall()
     return tableVals;
 def getAllVehicleWithVIN(vin=""):
